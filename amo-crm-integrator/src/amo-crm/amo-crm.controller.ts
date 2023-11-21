@@ -55,4 +55,15 @@ export class AmoCrmController {
     const result = await this.amoCrmService.updateContact(dto, token);
     return result;
   }
+
+  @Post('leads')
+  @HttpCode(HttpStatus.OK)
+  public async createLead(
+    @Req() req: RawBodyRequest<{headers: {authorization: string}}>,
+    @Body() dto: any
+  ) {
+    const token = req.headers.authorization;
+    const result = await this.amoCrmService.createLead(dto, token);
+    return result;
+  }
 }
