@@ -11,6 +11,12 @@ interface GetTokens {
   redirect_uri: string;
 }
 
+interface CheckContact {
+  name: string;
+  email: string;
+  phone: string;
+}
+
 @Injectable()
 export class AmoCrmService {
   constructor(private readonly httpService: HttpService) {}
@@ -33,6 +39,89 @@ export class AmoCrmService {
       ),
     );
     return data;
+  }
+
+  async checkContact(dto: CheckContact, token: string) {
+    const contactByEmail = await this.getContacts(token, dto.email);
+    const contactByPhone = await this.getContacts(token, dto.phone);
+
+    if (contactByEmail || contactByPhone) {
+      const contactEmailId = contactByEmail._embedded.contacts[0].id ?? '';
+      const contactPhoneId = contactByPhone._embedded.contacts[0].id ?? '';
+      const id = contactEmailId ?? contactPhoneId;
+      await this.updateContact([
+        {
+          id,
+          name: dto.name,
+          custom_fields_values: [
+            {
+              field_id: 1451445,
+              values: [
+                {
+                  value: dto.email
+                }
+              ]
+            },
+            {
+              field_id: 1451443,
+              values: [
+                {
+                  value: dto.phone
+                }
+              ]
+            }
+          ]
+        }
+      ], token)
+
+      const newLead = await this.createLead([
+        {
+          name: "Новая сделка",
+          _embedded:{
+            contacts:[
+              {
+                id
+              }
+            ]
+          }
+        }
+      ], token);
+  
+      return newLead;
+    }
+
+    const newLead = await this.createLead([
+      {
+        name: "Новая сделка",
+        _embedded:{
+          contacts:[
+            {
+              name: dto.name,
+              custom_fields_values: [
+                {
+                  field_id: 1451445,
+                  values: [
+                    {
+                      value: dto.email
+                    }
+                  ]
+                },
+                {
+                  field_id: 1451443,
+                  values: [
+                    {
+                      value: dto.phone
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ], token);
+
+    return newLead;
   }
 
   async getContacts(token: string, searchString?: string) {

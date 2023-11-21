@@ -1,3 +1,14 @@
+### Запрос к основному ресурсу задания (поиск и создание контакта и сделки с ним)
+POST http://localhost:5000/amo-crm/contacts/check HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6ImQxYTQ0OGExNDViODM0NmQzZWFiNGVjZWEzYjMxOWNjNWRjOTU1OGIwZTA2NzU2NjczMGNlZjkyMWNjY2IyMjQyNDc1MWEyYTBkMmJmMWMwIn0.eyJhdWQiOiI2ZTJkNzcwNS1hNWU2LTRkZjAtYjljMS0yNmM3NDQ2OWRmMDIiLCJqdGkiOiJkMWE0NDhhMTQ1YjgzNDZkM2VhYjRlY2VhM2IzMTljYzVkYzk1NThiMGUwNjc1NjY3MzBjZWY5MjFjY2NiMjI0MjQ3NTFhMmEwZDJiZjFjMCIsImlhdCI6MTcwMDU3NDM0NCwibmJmIjoxNzAwNTc0MzQ0LCJleHAiOjE3MDA2NjA3NDQsInN1YiI6IjEwMzYwMzY2IiwiZ3JhbnRfdHlwZSI6IiIsImFjY291bnRfaWQiOjMxNDE2ODU0LCJiYXNlX2RvbWFpbiI6ImFtb2NybS5ydSIsInZlcnNpb24iOjIsInNjb3BlcyI6WyJwdXNoX25vdGlmaWNhdGlvbnMiLCJmaWxlcyIsImNybSIsImZpbGVzX2RlbGV0ZSIsIm5vdGlmaWNhdGlvbnMiXX0.SxXeT9lx3OApKwuqiMI-C5ljP_O8WWRf5x1dCmt-T2KKsQmlJjXv7H5bymvyISUmUK1xdUF-aHwk-9uO6WvMTOEFaokjy7yQht6A6-gnKDO-gt2ZYOfwjLiOL6Qg-g1DZI0YGfQoC2LRIV3w66-ze4KkvwX2FjnnPEGnItc6M0CNxTZ0mq1INexncNmgbWy65Wa1Sq7BWrvz6-sMqU-JPDSiwjoigEw65MT9hoDaBpT_bRUkkgVJu_tRg41oipSX1ShEdYDKisF2UFCJhgF4ibsPlyJoqFlHIQxwemwxgQzRmLziNcV5apwQ7QfsXCQWy2b1j5eeQQduvCi7P5mfGA
+
+{
+  "name": "Наталья Сергеева",
+  "email": "sergeeva.n_1982@hotmail.com",
+  "phone": "89203300102"
+}
+
 ### Запрос токенов
 POST http://localhost:5000/amo-crm/tokens HTTP/1.1
 Content-Type: application/json

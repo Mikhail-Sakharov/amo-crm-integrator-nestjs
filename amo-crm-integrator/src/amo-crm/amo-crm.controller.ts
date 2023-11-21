@@ -9,6 +9,12 @@ interface GetTokens {
   redirect_uri: string;
 }
 
+interface CheckContact {
+  name: string;
+  email: string;
+  phone: string;
+}
+
 @Controller('amo-crm')
 export class AmoCrmController {
   constructor(private readonly amoCrmService: AmoCrmService) {}
@@ -53,6 +59,21 @@ export class AmoCrmController {
   ) {
     const token = req.headers.authorization;
     const result = await this.amoCrmService.updateContact(dto, token);
+    return result;
+  }
+
+  // Ресурс для проверки существования контакта в БД,
+  // создания новой записи в случае отсутствия
+  // и добавления новой сделки в первом статусе воронки
+
+  @Post('contacts/check')
+  @HttpCode(HttpStatus.OK)
+  public async checkContact(
+    @Req() req: RawBodyRequest<{headers: {authorization: string}}>,
+    @Body() dto: CheckContact
+  ) {
+    const token = req.headers.authorization;
+    const result = await this.amoCrmService.checkContact(dto, token);
     return result;
   }
 
