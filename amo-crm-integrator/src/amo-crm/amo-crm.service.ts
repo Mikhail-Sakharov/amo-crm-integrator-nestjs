@@ -17,12 +17,15 @@ export class AmoCrmService {
 
   public async getTokens(dto: GetTokens) {
     const {data} = await firstValueFrom(
-      this.httpService.post('https://sakharovmikhail.amocrm.ru/oauth2/access_token', {
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        data: dto
-      }).pipe(
+      this.httpService.post(
+        'https://sakharovmikhail.amocrm.ru/oauth2/access_token',
+        dto,
+        {
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        }
+      ).pipe(
         catchError((error: AxiosError) => {
           Logger.error(error.response.data);
           throw 'Something went wrong!';
@@ -50,5 +53,26 @@ export class AmoCrmService {
       ),
     );
     return data;
+  }
+
+  public async createContact(dto: any, token: string) {
+    const response = await firstValueFrom(
+      this.httpService.post(
+        'https://sakharovmikhail.amocrm.ru/api/v4/contacts',
+        dto,
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `${token}`
+          }
+        }
+      ).pipe(
+        catchError((error: AxiosError) => {
+          Logger.error(error.response.data);
+          throw 'Something went wrong!';
+        }),
+      ),
+    );
+    return response.data;
   }
 }

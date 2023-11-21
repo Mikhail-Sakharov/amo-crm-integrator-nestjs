@@ -33,4 +33,15 @@ export class AmoCrmController {
     const result = await this.amoCrmService.getContacts(token, searchString);
     return result;
   }
+
+  @Post('contacts')
+  @HttpCode(HttpStatus.OK)
+  public async createContact(
+    @Req() req: RawBodyRequest<{headers: {authorization: string}}>,
+    @Body() dto: any
+  ) {
+    const token = req.headers.authorization;
+    const result = await this.amoCrmService.createContact(dto, token);
+    return result;
+  }
 }
