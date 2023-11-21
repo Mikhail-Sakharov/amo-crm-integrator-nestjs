@@ -1,4 +1,4 @@
-import {Body, Controller, Get, HttpCode, HttpStatus, Post, Query, RawBodyRequest, Req} from '@nestjs/common';
+import {Body, Controller, Get, HttpCode, HttpStatus, Patch, Post, Query, RawBodyRequest, Req} from '@nestjs/common';
 import {AmoCrmService} from './amo-crm.service';
 
 interface GetTokens {
@@ -42,6 +42,17 @@ export class AmoCrmController {
   ) {
     const token = req.headers.authorization;
     const result = await this.amoCrmService.createContact(dto, token);
+    return result;
+  }
+
+  @Patch('contacts')
+  @HttpCode(HttpStatus.OK)
+  public async updateContact(
+    @Req() req: RawBodyRequest<{headers: {authorization: string}}>,
+    @Body() dto: any
+  ) {
+    const token = req.headers.authorization;
+    const result = await this.amoCrmService.updateContact(dto, token);
     return result;
   }
 }

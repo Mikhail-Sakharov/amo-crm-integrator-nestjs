@@ -75,4 +75,25 @@ export class AmoCrmService {
     );
     return response.data;
   }
+
+  public async updateContact(dto: any, token: string) {
+    const response = await firstValueFrom(
+      this.httpService.patch(
+        'https://sakharovmikhail.amocrm.ru/api/v4/contacts',
+        dto,
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `${token}`
+          }
+        }
+      ).pipe(
+        catchError((error: AxiosError) => {
+          Logger.error(error.response.data);
+          throw 'Something went wrong!';
+        }),
+      ),
+    );
+    return response.data;
+  }
 }
