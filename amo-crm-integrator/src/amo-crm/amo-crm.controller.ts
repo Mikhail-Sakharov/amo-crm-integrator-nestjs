@@ -1,5 +1,5 @@
-import { Controller, Get, HttpCode, HttpStatus } from '@nestjs/common';
-import { AmoCrmService } from './amo-crm.service';
+import {Controller, Get, HttpCode, HttpStatus} from '@nestjs/common';
+import {AmoCrmService} from './amo-crm.service';
 
 @Controller('amo-crm')
 export class AmoCrmController {
